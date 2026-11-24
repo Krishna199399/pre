@@ -1,0 +1,27 @@
+build
+dist / media
+node_modules
+.DS_Store
+.env
+.next
+next-env.d.ts
+.vercel
+
+# Payload media upload directory (included so Vercel has existing site images)
+# public/media/
+
+public/robots.txt
+public/sitemap*.xml
+
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# WordPress migration download cache
+.migration-cache/
+# local SQLite database
+prestige.db*

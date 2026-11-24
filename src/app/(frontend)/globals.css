@@ -1,0 +1,362 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@config '../../../tailwind.config.mjs';
+
+@custom-variant dark (&:is([data-theme='dark'] *));
+@custom-variant sm (@media (width >= theme(--breakpoint-sm)));
+@custom-variant md (@media (width >= theme(--breakpoint-md)));
+@custom-variant lg (@media (width >= theme(--breakpoint-lg)));
+@custom-variant xl (@media (width >= theme(--breakpoint-xl)));
+@custom-variant 2xl (@media (width >= theme(--breakpoint-2xl)));
+/* Wide but short windows (typical laptops with display scaling) */
+@custom-variant short (@media (width >= 64rem) and (height <= 860px));
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: unset;
+    font-size: unset;
+  }
+}
+
+@plugin "@tailwindcss/typography";
+
+@source inline("lg:col-span-4");
+@source inline("lg:col-span-6");
+@source inline("lg:col-span-8");
+@source inline("lg:col-span-12");
+@source inline("border-border");
+@source inline("bg-card");
+@source inline("border-error");
+@source inline("bg-error/30");
+@source inline("border-success");
+@source inline("bg-success/30");
+@source inline("border-warning");
+@source inline("bg-warning/30");
+
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 86rem;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @variant sm {
+    .container {
+      max-width: var(--breakpoint-sm);
+    }
+  }
+
+  @variant md {
+    .container {
+      max-width: var(--breakpoint-md);
+      padding-inline: 2rem;
+    }
+  }
+
+  @variant lg {
+    .container {
+      max-width: var(--breakpoint-lg);
+    }
+  }
+
+  @variant xl {
+    .container {
+      max-width: var(--breakpoint-xl);
+    }
+  }
+
+  @variant 2xl {
+    .container {
+      max-width: var(--breakpoint-2xl);
+    }
+  }
+}
+
+:root {
+  /* Prestige brand palette (taken from the live site: royal blue #2639AE, navy #081237, fire red #E12A38) */
+  --background: #ffffff;
+  --foreground: #0d1433;
+  --card: #f5f7ff;
+  --card-foreground: #0d1433;
+  --popover: #ffffff;
+  --popover-foreground: #0d1433;
+  --primary: #2639ae;
+  --primary-foreground: #ffffff;
+  --secondary: #eef1fd;
+  --secondary-foreground: #1b2a85;
+  --muted: #f4f6fb;
+  --muted-foreground: #5a6380;
+  --accent: #e12a38;
+  --accent-foreground: #ffffff;
+  --destructive: #d4191d;
+  --destructive-foreground: #ffffff;
+  --border: #e2e6f3;
+  --input: #d6dbec;
+  --ring: #2639ae;
+  --navy: #081237;
+  --navy-soft: #121b55;
+  --brand-purple: #6d2dda;
+  --chart-1: #2639ae;
+  --chart-2: #e12a38;
+  --chart-3: #6d2dda;
+  --chart-4: #f5a524;
+  --chart-5: #13612e;
+  --radius: 0.875rem;
+  --sidebar: #f5f7ff;
+  --sidebar-foreground: #0d1433;
+  --sidebar-primary: #2639ae;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef1fd;
+  --sidebar-accent-foreground: #1b2a85;
+  --sidebar-border: #e2e6f3;
+  --sidebar-ring: #2639ae;
+  --success: #dcf5e6;
+  --warning: #fff4d6;
+  --error: #fde2e4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-brand-purple: var(--brand-purple);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+  }
+}
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  /* Small uppercase label above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary;
+  }
+  .section {
+    @apply py-14 md:py-20;
+  }
+  /* Headings scale with both window width and height so sections fit on laptop screens */
+  .heading-xl {
+    font-size: clamp(2.4rem, min(5.2vw, 8.2vh), 4.5rem);
+    line-height: 1.08;
+  }
+  .heading-lg {
+    font-size: clamp(1.85rem, min(4vw, 6.2vh), 3rem);
+    line-height: 1.12;
+  }
+  .section-title {
+    @apply font-heading text-3xl font-bold text-navy md:text-4xl;
+  }
+  .section-lead {
+    @apply mt-4 text-base text-muted-foreground md:text-lg;
+  }
+  .bg-brand-gradient {
+    background-image: linear-gradient(135deg, #081237 0%, #121b55 45%, #2639ae 100%);
+  }
+  .text-gradient {
+    background-image: linear-gradient(90deg, #2639ae, #6d2dda);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.625rem));
+  }
+}
+
+/* ───────── Modern design layer ───────── */
+@layer components {
+  /* Soft colour blobs on dark sections */
+  .bg-mesh {
+    background-color: #081237;
+    background-image:
+      radial-gradient(at 12% 18%, rgba(38, 57, 174, 0.75) 0px, transparent 50%),
+      radial-gradient(at 88% 12%, rgba(109, 45, 218, 0.45) 0px, transparent 45%),
+      radial-gradient(at 78% 92%, rgba(225, 42, 56, 0.35) 0px, transparent 45%),
+      radial-gradient(at 20% 95%, rgba(18, 27, 85, 0.9) 0px, transparent 55%);
+  }
+  .glass {
+    @apply border border-white/15 bg-white/10 backdrop-blur-xl;
+  }
+  .glass-light {
+    @apply border border-white/60 bg-white/80 shadow-[0_20px_50px_-20px_rgba(8,18,55,0.35)] backdrop-blur-xl;
+  }
+  .text-gradient-warm {
+    background-image: linear-gradient(90deg, #ff5a68 0%, #ff9a62 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-primary {
+    background-image: linear-gradient(135deg, #2639ae 0%, #4a3fd1 55%, #6d2dda 100%);
+  }
+  .bg-gradient-accent {
+    background-image: linear-gradient(135deg, #e12a38 0%, #ff6a4d 100%);
+  }
+  /* Gradient border that lights up on hover (use on a relative, rounded element) */
+  .glow-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #2639ae, #6d2dda, #e12a38);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+  /* Light sweep across buttons on hover */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%) skewX(-20deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transition: transform 0.7s ease;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(120%) skewX(-20deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@media (min-width: 64rem) and (max-height: 860px) {
+  .section {
+    padding-block: 3.5rem;
+  }
+}
+
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+@utility animate-float-delayed {
+  animation: float 7s ease-in-out 1.5s infinite;
+}
+
+@keyframes slide-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

@@ -1,0 +1,203 @@
+// Uses Payload's theme variables so it matches light and dark admin themes.
+.import-results {
+  max-width: 1100px;
+  padding: calc(var(--base) * 1.5) 0 calc(var(--base) * 3);
+
+  h1 {
+    margin: 0 0 6px;
+  }
+  h2 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+  }
+  p {
+    margin: 0 0 12px;
+    color: var(--theme-elevation-700);
+    line-height: 1.55;
+  }
+  code {
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--theme-elevation-100);
+  }
+
+  &__head {
+    margin-bottom: calc(var(--base) * 1.25);
+  }
+
+  &__card {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding: 22px;
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 14px;
+    background: var(--theme-elevation-0);
+  }
+
+  &__step {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2639ae, #6d2dda);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  &__grow {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 999px;
+    background: #2639ae;
+    color: #fff !important;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: #1d2c8a;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    &--ghost {
+      border: 1px solid var(--theme-elevation-250);
+      background: transparent;
+      color: var(--theme-text) !important;
+
+      &:hover:not(:disabled) {
+        background: var(--theme-elevation-100);
+      }
+    }
+  }
+
+  &__drop {
+    display: block;
+    padding: 26px;
+    border: 2px dashed var(--theme-elevation-250);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #2639ae;
+    }
+    input {
+      display: block;
+      margin: 0 auto 10px;
+    }
+    span {
+      color: var(--theme-elevation-700);
+    }
+  }
+
+  &__error,
+  &__warn {
+    margin-top: 12px !important;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+  &__error {
+    background: var(--theme-error-100);
+    color: var(--theme-error-750) !important;
+  }
+  &__warn {
+    background: var(--theme-warning-100);
+    color: var(--theme-warning-750) !important;
+  }
+  &__muted {
+    margin-top: 10px !important;
+    font-size: 0.9rem;
+  }
+
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+
+    span {
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--theme-elevation-100);
+      font-size: 0.85rem;
+    }
+    .ok {
+      background: var(--theme-success-100);
+      color: var(--theme-success-750);
+    }
+    .bad {
+      background: var(--theme-error-100);
+      color: var(--theme-error-750);
+    }
+  }
+
+  &__table-wrap {
+    max-height: 420px;
+    overflow: auto;
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 10px;
+  }
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+
+    th,
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--theme-elevation-100);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--theme-elevation-50);
+      font-weight: 600;
+    }
+    tr.is-error td {
+      background: var(--theme-error-50);
+      color: var(--theme-error-750);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+    align-items: center;
+    margin-top: 18px;
+
+    p {
+      flex-basis: 100%;
+      margin: 0 !important;
+    }
+  }
+  &__check,
+  &__date {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+  &__date input {
+    padding: 6px 8px;
+    border: 1px solid var(--theme-elevation-250);
+    border-radius: 8px;
+    background: var(--theme-input-bg);
+    color: var(--theme-text);
+  }
+}
