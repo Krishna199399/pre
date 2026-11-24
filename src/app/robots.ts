@@ -7,6 +7,9 @@ import { SITE } from '@/seo/site'
  * ChatGPT, Gemini, Perplexity, Claude… needs their crawlers allowed). Admin, API and search results are closed.
  */
 export default function robots(): MetadataRoute.Robots {
+  // Client preview on Vercel: keep the copy out of every search engine (avoids duplicate content)
+  if (process.env.PREVIEW_MODE === 'true') return { rules: [{ userAgent: '*', disallow: '/' }] }
+
   const disallow = ['/admin', '/api/', '/next/', '/search']
   return {
     rules: [

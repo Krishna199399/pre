@@ -1,6 +1,8 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import sharp from 'sharp'
+import fs from 'fs'
+import os from 'os'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
@@ -25,6 +27,20 @@ import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+/**
+ * PREVIEW_MODE=true → client preview on Vercel (frontend only).
+ * Vercel's app folder is read-only, so the cleaned demo database (demo/preview.db: content + demo student,
+ * no admin accounts or enquiries) is copied to /tmp and used from there. Anything written (e.g. a test
+ * enquiry) is temporary and disappears — the real site runs on Hostinger with its own database.
+ */
+const previewDatabaseUrl = (): string | undefined => {
+  if (process.env.PREVIEW_MODE !== 'true') return undefined
+  const source = path.resolve(process.cwd(), 'demo/preview.db')
+  const target = path.join(os.tmpdir(), 'prestige-preview.db')
+  if (!fs.existsSync(target)) fs.copyFileSync(source, target)
+  return `file:${target}`
+}
 
 export default buildConfig({
   admin: {
@@ -96,7 +112,10 @@ export default buildConfig({
       // Local development falls back to ./prestige.db. In production DATABASE_URL must point to a database
       // OUTSIDE the app folder (Hostinger replaces the app folder on every deploy), e.g.
       // file:/home/<user>/prestige-data/prestige.db
-      url: process.env.DATABASE_URL || (process.env.NODE_ENV === 'production' ? '' : 'file:./prestige.db'),
+      url:
+        previewDatabaseUrl() ||
+        process.env.DATABASE_URL ||
+        (process.env.NODE_ENV === 'production' ? '' : 'file:./prestige.db'),
       authToken: process.env.DATABASE_AUTH_TOKEN,
     },
   }),

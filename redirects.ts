@@ -24,5 +24,14 @@ export const redirects: NextConfig['redirects'] = async () => {
     '/posts-sitemap.xml',
   ].map((source) => ({ source, destination: '/sitemap.xml', permanent: true }))
 
-  return [internetExplorerRedirect, ...oldSitemaps]
+  // PREVIEW_MODE (Vercel client preview): frontend only — no admin panel on the preview
+  const previewNoAdmin =
+    process.env.PREVIEW_MODE === 'true'
+      ? [
+          { source: '/admin', destination: '/', permanent: false },
+          { source: '/admin/:path*', destination: '/', permanent: false },
+        ]
+      : []
+
+  return [internetExplorerRedirect, ...oldSitemaps, ...previewNoAdmin]
 }
