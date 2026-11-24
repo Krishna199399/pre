@@ -93,7 +93,10 @@ export default buildConfig({
     : undefined,
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URL || 'file:./prestige.db',
+      // Local development falls back to ./prestige.db. In production DATABASE_URL must point to a database
+      // OUTSIDE the app folder (Hostinger replaces the app folder on every deploy), e.g.
+      // file:/home/<user>/prestige-data/prestige.db
+      url: process.env.DATABASE_URL || (process.env.NODE_ENV === 'production' ? '' : 'file:./prestige.db'),
       authToken: process.env.DATABASE_AUTH_TOKEN,
     },
   }),
@@ -101,7 +104,8 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Header, Footer],
   plugins,
-  secret: process.env.PAYLOAD_SECRET || '56c5ea9d2ec86df9861d616a',
+  // Never hard-code this: it signs admin logins. Set PAYLOAD_SECRET in .env / the hosting panel.
+  secret: process.env.PAYLOAD_SECRET || '',
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
