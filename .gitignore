@@ -23,5 +23,5 @@ node_modules/
 
 # WordPress migration download cache
 .migration-cache/
-# local SQLite database
-prestige.db*
+# local SQLite database (included for Option 1 Vercel build)
+# prestige.db*

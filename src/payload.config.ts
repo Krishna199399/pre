@@ -93,7 +93,7 @@ export default buildConfig({
     : undefined,
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URL || '',
+      url: process.env.DATABASE_URL || 'file:./prestige.db',
       authToken: process.env.DATABASE_AUTH_TOKEN,
     },
   }),
@@ -101,7 +101,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Header, Footer],
   plugins,
-  secret: process.env.PAYLOAD_SECRET,
+  secret: process.env.PAYLOAD_SECRET || '56c5ea9d2ec86df9861d616a',
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
