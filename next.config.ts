@@ -56,22 +56,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  // PREVIEW_MODE (Vercel client preview): bundle the demo database into the server functions, and serve
-  // any "/api/<collection>/file/…" image address from the static copy in public/ (Vercel's functions
-  // can't read those files; its CDN can).
-  ...(process.env.PREVIEW_MODE === 'true'
-    ? {
-        outputFileTracingIncludes: { '/*': ['./demo/preview.db'], '/**': ['./demo/preview.db'] },
-        rewrites: async () => ({
-          beforeFiles: [
-            { source: '/api/media/file/:file*', destination: '/media/:file*' },
-            { source: '/api/gallery/file/:file*', destination: '/gallery/:file*' },
-          ],
-          afterFiles: [],
-          fallback: [],
-        }),
-      }
-    : {}),
   turbopack: {
     root: path.resolve(dirname),
   },

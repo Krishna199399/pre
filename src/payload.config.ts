@@ -1,8 +1,5 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import sharp from 'sharp'
-import fs from 'fs'
-import os from 'os'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
@@ -28,19 +25,6 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-/**
- * PREVIEW_MODE=true → client preview on Vercel (frontend only).
- * Vercel's app folder is read-only, so the cleaned demo database (demo/preview.db: content + demo student,
- * no admin accounts or enquiries) is copied to /tmp and used from there. Anything written (e.g. a test
- * enquiry) is temporary and disappears — the real site runs on Hostinger with its own database.
- */
-const previewDatabaseUrl = (): string | undefined => {
-  if (process.env.PREVIEW_MODE !== 'true') return undefined
-  const source = path.resolve(process.cwd(), 'demo/preview.db')
-  const target = path.join(os.tmpdir(), 'prestige-preview.db')
-  if (!fs.existsSync(target)) fs.copyFileSync(source, target)
-  return `file:${target}`
-}
 
 export default buildConfig({
   admin: {
@@ -93,32 +77,15 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  // Enquiry emails go out through the institute's own mailbox (Hostinger SMTP).
-  // Without SMTP settings, emails are printed to the server console instead (fine for local development).
-  email: process.env.SMTP_HOST
-    ? nodemailerAdapter({
-        defaultFromAddress: process.env.SMTP_FROM || 'admin@prestigeinstitutedharwad.in',
-        defaultFromName: 'Prestige Institute Website',
-        transportOptions: {
-          host: process.env.SMTP_HOST,
-          port: Number(process.env.SMTP_PORT || 465),
-          secure: Number(process.env.SMTP_PORT || 465) === 465,
-          auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-        },
-      })
-    : undefined,
   db: sqliteAdapter({
     client: {
-      // Local development falls back to ./prestige.db. In production DATABASE_URL must point to a database
-      // OUTSIDE the app folder (Hostinger replaces the app folder on every deploy), e.g.
-      // file:/home/<user>/prestige-data/prestige.db
-      url:
-        previewDatabaseUrl() ||
-        process.env.DATABASE_URL ||
-        (process.env.NODE_ENV === 'production' ? '' : 'file:./prestige.db'),
+      url: process.env.DATABASE_URL || 'file:./prestige.db',
       authToken: process.env.DATABASE_AUTH_TOKEN,
     },
   }),
+  // GraphQL is disabled: Vercel Hobby plan allows max 12 serverless functions.
+  // The Payload admin and all REST API routes work without it.
+  graphQL: { disable: true },
   collections: [Pages, Posts, Courses, Faculty, Recruiters, Gallery, Media, Categories, Students, Results, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Header, Footer],

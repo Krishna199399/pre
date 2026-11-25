@@ -79,15 +79,11 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   formatDetection: { telephone: true, address: true, email: true },
-  // PREVIEW_MODE (Vercel client preview) is never indexed; the real site on Hostinger is.
-  robots:
-    process.env.PREVIEW_MODE === 'true'
-      ? { index: false, follow: false, googleBot: { index: false, follow: false } }
-      : {
-          index: true,
-          follow: true,
-          googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
-        },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',

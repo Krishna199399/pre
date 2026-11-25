@@ -44,10 +44,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    // UPLOADS_DIR lets production keep uploads outside the app folder so redeploys don't wipe them.
-    staticDir: process.env.UPLOADS_DIR
-      ? path.join(process.env.UPLOADS_DIR, 'media')
-      : path.resolve(dirname, '../../public/media'),
+    staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     imageSizes: [
