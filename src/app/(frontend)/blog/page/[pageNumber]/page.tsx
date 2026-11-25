@@ -31,8 +31,13 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const { totalDocs } = await payload.count({ collection: 'posts', overrideAccess: false })
-  const totalPages = Math.ceil(totalDocs / POSTS_PER_PAGE)
-  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({ pageNumber: String(i + 2) }))
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { totalDocs } = await payload.count({ collection: 'posts', overrideAccess: false })
+    const totalPages = Math.ceil(totalDocs / POSTS_PER_PAGE)
+    return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({ pageNumber: String(i + 2) }))
+  } catch {
+    // DB not migrated yet or unavailable at build time — pages rendered on-demand instead
+    return []
+  }
 }

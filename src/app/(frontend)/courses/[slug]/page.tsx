@@ -20,9 +20,13 @@ import { courseSchema } from '@/seo/schema'
 import { PAGE_SEO } from '@/seo/site'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const { docs } = await payload.find({ collection: 'courses', limit: 100, pagination: false, select: { slug: true } })
-  return docs.filter((d) => d.slug).map((d) => ({ slug: d.slug as string }))
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { docs } = await payload.find({ collection: 'courses', limit: 100, pagination: false, select: { slug: true } })
+    return docs.filter((d) => d.slug).map((d) => ({ slug: d.slug as string }))
+  } catch {
+    return []
+  }
 }
 
 type Args = { params: Promise<{ slug: string }> }
