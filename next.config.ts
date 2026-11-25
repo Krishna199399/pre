@@ -56,6 +56,14 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   redirects,
+  rewrites: async () => ({
+    beforeFiles: [
+      { source: '/api/media/file/:file*', destination: '/media/:file*' },
+      { source: '/api/gallery/file/:file*', destination: '/gallery/:file*' },
+    ],
+    afterFiles: [],
+    fallback: [],
+  }),
   turbopack: {
     root: path.resolve(dirname),
   },

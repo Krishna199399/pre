@@ -39,10 +39,8 @@ export const Gallery: CollectionConfig = {
     },
   ],
   upload: {
-    // UPLOADS_DIR lets production keep uploads outside the app folder so redeploys don't wipe them.
-    staticDir: process.env.UPLOADS_DIR
-      ? path.join(process.env.UPLOADS_DIR, 'gallery')
-      : path.resolve(dirname, '../../public/gallery'),
+    // Static directory for uploaded gallery images
+    staticDir: path.resolve(dirname, '../../public/gallery'),
     mimeTypes: ['image/*'],
     adminThumbnail: 'thumbnail',
     focalPoint: true,
