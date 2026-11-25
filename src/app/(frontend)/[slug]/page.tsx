@@ -21,15 +21,20 @@ import { FAQS } from '@/seo/faqs'
  * exactly like the old WordPress site, so existing Google links keep working.
  */
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const [pages, posts] = await Promise.all([
-    payload.find({ collection: 'pages', draft: false, limit: 1000, overrideAccess: false, pagination: false, select: { slug: true } }),
-    payload.find({ collection: 'posts', draft: false, limit: 1000, overrideAccess: false, pagination: false, select: { slug: true } }),
-  ])
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const [pages, posts] = await Promise.all([
+      payload.find({ collection: 'pages', draft: false, limit: 1000, overrideAccess: false, pagination: false, select: { slug: true } }),
+      payload.find({ collection: 'posts', draft: false, limit: 1000, overrideAccess: false, pagination: false, select: { slug: true } }),
+    ])
 
-  return [...pages.docs, ...posts.docs]
-    .filter((doc) => doc.slug && doc.slug !== 'home')
-    .map(({ slug }) => ({ slug: slug as string }))
+    return [...pages.docs, ...posts.docs]
+      .filter((doc) => doc.slug && doc.slug !== 'home')
+      .map(({ slug }) => ({ slug: slug as string }))
+  } catch {
+    // DB not available at build time (e.g. env vars not yet set) — pages will be rendered on-demand instead
+    return []
+  }
 }
 
 type Args = {
